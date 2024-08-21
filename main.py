@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
 from db import connect_to_mongo
-from scrapers.scraper import scrape_links
+from scrapers.lusha_scraper import scrape_links
 from outscraper_client import get_outscraper_client, scrape_vendor_data, verify_emails
 from utils import setup_driver, get_final_url, get_base_url, get_base_collection_name, insert_vendor_data
-from config import WEBSITE_URL
+from website_urls import WEBSITE_URL
 from excel import create_excel_file
 from utils import close_driver, get_priority_text, get_combined_text
 
@@ -23,6 +23,7 @@ def main():
     processed_urls = set()
 
     base_collection_name = get_base_collection_name(WEBSITE_URL)
+    collection_name = base_collection_name
 
     valid_links_by_category = {}
 

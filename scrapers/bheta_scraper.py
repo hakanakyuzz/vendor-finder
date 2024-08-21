@@ -1,4 +1,4 @@
-from config import WEBSITE_URL
+from website_urls import WEBSITE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException

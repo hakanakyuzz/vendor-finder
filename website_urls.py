@@ -1,0 +1,7 @@
+WEBSITE_URL = "https://www.lusha.com/company-search/wholesale/30/united-kingdom/12/page/24/"
+# WEBSITE_URL = "https://www.lusha.com/company-search/wholesale/30/united-kingdom/12/"
+# WEBSITE_URL = "https://www.bheta.co.uk/supplier-search/"
+# WEBSITE_URL = "https://www.confex.ltd.uk/suppliers_list.asp"
+# WEBSITE_URL = "https://www.esources.co.uk/suppliers.php"
+# WEBSITE_URL = "https://www.great.gov.uk/international/trade/search/?q=&industries=CLOTHING_FOOTWEAR_AND_FASHION&industries=CREATIVE_AND_MEDIA&industries=FOOD_AND_DRINK&industries=GIFTWARE_JEWELLERY_AND_TABLEWARE&industries=HOUSEHOLD_GOODS_FURNITURE_AND_FURNISHINGS&industries=RETAIL_AND_LUXURY&industries=TEXTILES_INTERIOR_TEXTILES_AND_CARPETS"
+# WEBSITE_URL = "https://www.thewholesaler.co.uk/"
