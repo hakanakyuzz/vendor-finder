@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 from db import connect_to_mongo
-from scrapers.lusha_scraper import scrape_links
-from outscraper_client import get_outscraper_client, scrape_vendor_data, verify_emails
-from utils import setup_driver, get_final_url, get_base_url, get_base_collection_name, insert_vendor_data
+from scrapers.thewholesaler_scraper import scrape_links
+from outscraper_client import get_outscraper_client, scrape_vendor_data
+from utils import setup_driver, get_final_url, get_base_url, get_base_collection_name, insert_vendor_data, verify_emails
 from website_urls import WEBSITE_URL
 from excel import create_excel_file
 from utils import close_driver, get_priority_text, get_combined_text
@@ -48,10 +48,10 @@ def main():
                     for result in results:
                         if isinstance(result, dict):
                             emails = [email['value'] for email in result.get('emails', [])]
-                            verified_emails = verify_emails(OUTSCRAPER_API_KEY, emails)
+                            verified_emails = verify_emails(emails)
                             print(f"Verified emails: {verified_emails}")
-                            valid_emails = [email['query'] for email in verified_emails if
-                                            email.get('status') in ['RECEIVING']]
+                            valid_emails = [email['query'] for email in verified_emails if email.get('status') in ['RECEIVING']]
+
                             if valid_emails:
                                 result['emails'] = [{'value': email} for email in valid_emails]
                                 description = result.get('site_data', {}).get('description')

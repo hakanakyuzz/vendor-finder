@@ -11,9 +11,9 @@ def scrape_links(driver, wait):
     parent_div = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'gb-grid-wrapper-e30b329c')))
     sub_div_classes = [
         'gb-grid-column-d16cc483',
-        'gb-grid-column-e5fcc923',
-        'gb-grid-column-213f0e2d',
-        'gb-grid-column-f8ae52c9'
+        # 'gb-grid-column-e5fcc923',
+        # 'gb-grid-column-213f0e2d',
+        # 'gb-grid-column-f8ae52c9'
     ]
 
     links_by_category = {}
@@ -28,7 +28,7 @@ def scrape_links(driver, wait):
         links_by_category[category_name] = []
 
         li_elements = ul_element.find_elements(By.TAG_NAME, 'li')
-        for li in li_elements:
+        for li in li_elements[:2]:
             a_tag = li.find_element(By.TAG_NAME, 'a')
             href = a_tag.get_attribute('href')
             if href:
