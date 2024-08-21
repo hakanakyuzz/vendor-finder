@@ -1,0 +1,14 @@
+# Ignore environment variables file
+.env
+
+# Ignore all .idea/ directory contents (IDE-specific configuration)
+.idea/
+
+# Ignore the specific project file
+vendor-finder.iml
+
+# Ignore the virtual environment folder
+venv/
+
+#
+test.py

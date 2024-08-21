@@ -1,11 +1,15 @@
+import os
+from dotenv import load_dotenv
 from db import connect_to_mongo
-from scraper import scrape_links
+from scrapers.scraper import scrape_links
 from outscraper_client import get_outscraper_client, scrape_vendor_data, verify_emails
 from utils import setup_driver, get_final_url, get_base_url, get_base_collection_name, insert_vendor_data
-from config import OUTSCRAPER_API_KEY, WEBSITE_URL
+from config import WEBSITE_URL
 from excel import create_excel_file
 from utils import close_driver, get_priority_text, get_combined_text
 
+load_dotenv()
+OUTSCRAPER_API_KEY = os.getenv("OUTSCRAPER_API_KEY")
 
 def main():
     db = connect_to_mongo()

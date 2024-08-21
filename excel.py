@@ -38,11 +38,10 @@ def create_excel_file(collection_name):
 
         data.append({
             'NAME': name,
-            'CATEGORY': category,
-            'SUBCATEGORY': '', # subcategory,
+            'SERVICE OFFERED': category,
             'WEBSITE': website,
             'EMAIL': email,
-            'PHONE NUMBER': phone,
+            'PHONE': phone,
             'COUNTRY': country,
             'CITY': city,
             'INSTAGRAM ACCOUNT (LINK)': instagram,
@@ -50,8 +49,8 @@ def create_excel_file(collection_name):
             'TWITTER ACCOUNT (LINK)': twitter,
             'YOUTUBE ACCOUNT (LINK)': youtube,
             'LINKEDIN ACCOUNT (LINK)': linkedin,
-            'ABOUT (the description)': about,
-            'WEIGHT (%)': weight
+            'ABOUT': about,
+            'MAX WEIGHT (%)': weight
         })
 
     if not data:
@@ -71,19 +70,18 @@ def create_excel_file(collection_name):
     column_widths = {
         'A': 25,
         'B': 25,
-        'C': 25,
+        'C': 40,
         'D': 40,
-        'E': 40,
-        'F': 20,
-        'G': 15,
-        'H': 20,
+        'E': 20,
+        'F': 15,
+        'G': 20,
+        'H': 45,
         'I': 45,
         'J': 45,
         'K': 45,
         'L': 45,
-        'M': 45,
-        'N': 25,
-        'O': 8
+        'M': 25,
+        'N': 8,
     }
 
     for col, width in column_widths.items():

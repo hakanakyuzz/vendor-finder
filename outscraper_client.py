@@ -1,7 +1,11 @@
+import os
+from dotenv import load_dotenv
 import requests
 from outscraper import ApiClient
-from config import OUTSCRAPER_API_KEY
 
+
+load_dotenv()
+OUTSCRAPER_API_KEY = os.getenv("OUTSCRAPER_API_KEY")
 
 def get_outscraper_client():
     return ApiClient(api_key=OUTSCRAPER_API_KEY)
