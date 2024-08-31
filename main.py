@@ -1,15 +1,22 @@
-import os
-from dotenv import load_dotenv
 from db import connect_to_mongo
-from scrapers.thewholesaler_scraper import scrape_links
-from outscraper_client import get_outscraper_client, scrape_vendor_data
-from utils import setup_driver, get_final_url, get_base_url, get_base_collection_name, insert_vendor_data, verify_emails
-from website_urls import WEBSITE_URL
 from excel import create_excel_file
-from utils import close_driver, get_priority_text, get_combined_text
+from website_urls import WEBSITE_URL
+from verification import verify_emails
+from driver import setup_driver, close_driver
+from scrapers.perfectcircle_scraper import scrape_links
+from clients.beautifulsoap_client import scrape_vendor_data
+from utils import (
+    get_final_url,
+    get_base_url,
+    get_base_collection_name,
+    insert_vendor_data,
+    get_priority_text,
+    get_combined_text
+)
 
-load_dotenv()
-OUTSCRAPER_API_KEY = os.getenv("OUTSCRAPER_API_KEY")
+
+# load_dotenv()
+# OUTSCRAPER_API_KEY = os.getenv("OUTSCRAPER_API_KEY")
 
 def main():
     db = connect_to_mongo()
@@ -19,7 +26,7 @@ def main():
     driver, wait = setup_driver()
     vendor_links_by_category = scrape_links(driver, wait)
 
-    outscraper_client = get_outscraper_client()
+    # outscraper_client = get_outscraper_client()
     processed_urls = set()
 
     base_collection_name = get_base_collection_name(WEBSITE_URL)
@@ -43,11 +50,14 @@ def main():
                     continue
                 processed_urls.add(base_url)
 
-                results = scrape_vendor_data(outscraper_client, base_url)
+                # results = scrape_vendor_data(outscraper_client, base_url)
+                results = scrape_vendor_data(base_url)
                 if isinstance(results, list):
                     for result in results:
                         if isinstance(result, dict):
                             emails = [email['value'] for email in result.get('emails', [])]
+
+                            # verified_emails = verify_emails(OUTSCRAPER_API_KEY, emails)
                             verified_emails = verify_emails(emails)
                             print(f"Verified emails: {verified_emails}")
                             valid_emails = [email['query'] for email in verified_emails if email.get('status') in ['RECEIVING']]

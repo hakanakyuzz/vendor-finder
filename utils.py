@@ -1,40 +1,31 @@
 from urllib.parse import urlparse
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from transformers import pipeline
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from config import categories
-import random
-import re
+import validators
 
 
-def setup_driver():
-    service = Service(ChromeDriverManager().install())
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    user_agents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36",
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15A5341f Safari/604.1",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
-    ]
-    user_agent = random.choice(user_agents)
-    options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(service=service, options=options)
-    wait = WebDriverWait(driver, 10)
-    return driver, wait
+def ensure_url_scheme(url):
+    if not url.startswith(('http://', 'https://')):
+        return 'http://' + url
+    return url
 
 
 def get_final_url(driver, initial_url):
     try:
+        initial_url = ensure_url_scheme(initial_url)
+
+        if not validators.url(initial_url):
+            print(f"Invalid initial URL format: {initial_url}")
+            return None
+
+        print(f"Navigating to {initial_url}...")
         driver.get(initial_url)
         final_url = driver.current_url
-        if final_url.startswith("http"):
+
+        if final_url.startswith("http") and validators.url(final_url):
             return final_url
         else:
             print(f"Invalid final URL: {final_url}")
@@ -136,9 +127,13 @@ def calculate_weight(doc):
         # filled_fields += 7
     if doc.get('query'):
         filled_fields += 10
-    if doc.get('emails', [{'value': ''}])[0]['value']:
+    # if doc.get('emails', [{'value': ''}])[0]['value']:
+        # filled_fields += 10
+    if doc.get('emails') and doc['emails'][0].get('value', ''):
         filled_fields += 10
-    if doc.get('phones', [{'value': ''}])[0]['value']:
+    # if doc.get('phones', [{'value': ''}])[0]['value']:
+        # filled_fields += 10
+    if doc.get('phones') and doc['phones'][0].get('value', ''):
         filled_fields += 10
     if doc.get('details', {}).get('country', ''):
         filled_fields += 17
@@ -158,37 +153,6 @@ def calculate_weight(doc):
         filled_fields += 7
 
     return filled_fields
-
-
-def close_driver(driver):
-    driver.quit()
-    print("Data scraping, storage, and classification completed successfully.")
-
-
-def verify_emails(emails):
-    priority_patterns = {
-        'high': re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
-        'medium': re.compile(r'^(?!.*(info|support|contact)).*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
-        'low': re.compile(r'^(info|support|contact)@.*'),
-    }
-
-    verified_emails = []
-
-    for email in emails:
-        if priority_patterns['high'].match(email):
-            print(f"High priority email: {email}")
-            verified_emails.append({'query': email, 'status': 'RECEIVING', 'priority': 'high'})
-        elif priority_patterns['medium'].match(email):
-            print(f"Medium priority email: {email}")
-            verified_emails.append({'query': email, 'status': 'RECEIVING', 'priority': 'medium'})
-        elif priority_patterns['low'].match(email):
-            print(f"Low priority email: {email}")
-            verified_emails.append({'query': email, 'status': 'RECEIVING', 'priority': 'low'})
-        else:
-            print(f"Invalid or low priority email: {email}")
-            verified_emails.append({'query': email, 'status': 'INVALID', 'priority': 'none'})
-
-    return verified_emails
 
 
 def insert_vendor_data(collection, category, final_url, result, valid_links_by_category):

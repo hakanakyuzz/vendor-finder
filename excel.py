@@ -20,8 +20,9 @@ def create_excel_file(collection_name):
         for suffix in ['.co.uk', '.com', '.net', '.org', '.biz', '.eco']:
             name = name.replace(suffix, '')
         name = name.replace('-', ' ').title() if name else ''
-        email = doc.get('emails', [{'value': ''}])[0]['value'] if 'emails' in doc else ''
-        phone = doc.get('phones', [{'value': ''}])[0]['value'] if 'phones' in doc else ''
+        email = doc.get('emails', [{'value': ''}])[0]['value'] if doc.get('emails') else ''
+        phone = doc.get('phones', [{'value': ''}])[0]['value'] if doc.get('phones') else ''
+        phone = phone.lstrip('+=') if phone else ''
         country = doc.get('details', {}).get('country', '') if 'details' in doc else ''
         city = doc.get('details', {}).get('city', '') if 'details' in doc else ''
         socials = doc.get('socials', {}) if 'socials' in doc else {}
