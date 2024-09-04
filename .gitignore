@@ -10,6 +10,6 @@ vendor-finder.iml
 # Ignore the virtual environment folder
 venv/
 
-#
+# Ignore the unnecessary file
 test.py
 trash.py

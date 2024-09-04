@@ -1,4 +1,4 @@
-WEBSITE_URL = 'https://www.esources.co.uk/' #without outscraper both links and verification
+WEBSITE_URL = 'https://www.esources.co.uk/wholesale-suppliers/31/' #without outscraper both links and verification
 # WEBSITE_URL = 'https://ciof.org.uk/guidance-and-resources/suppliers-directory' #without outscraper both links and verification
 # WEBSITE_URL = 'https://www.besa.org.uk/supplier/' #without outscraper both links and verification
 # WEBSITE_URL = 'https://www.dpaonthenet.net/es.aspx?st=1&sf=' #without outscraper both links and verification
