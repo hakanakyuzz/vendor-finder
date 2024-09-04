@@ -155,6 +155,66 @@ def calculate_weight(doc):
     return filled_fields
 
 
+# this will compare the collection with data collection and create a new collection with deleted duplicates
+
+def update_new_collection(collection_name):
+    db = connect_to_mongo()
+    if db is None:
+        return
+
+    data_collection = db['data']
+    new_collection = db[collection_name]
+
+    existing_vendors = set(doc['query'].strip().lower() for doc in data_collection.find({}, {'query': 1}))
+
+    new_vendors = []
+    for item in new_collection.find({}):
+        website = item.get('query', '').strip().lower()
+        if website not in existing_vendors:
+            new_vendors.append(item)
+
+    updated_collection_name = collection_name + '_updated'
+    db[updated_collection_name].drop()
+
+    if new_vendors:
+        db[updated_collection_name].insert_many(new_vendors)
+
+    create_excel_file(updated_collection_name)
+    print("New collection updated and duplicates removed. New collection 'new_collection_updated' created.")
+
+
+# create a data collection in mongo from collections already exist, check if there is any duplicate by looking query
+
+from db import connect_to_mongo
+from excel import create_excel_file
+
+
+def merge_collections():
+    db = connect_to_mongo()
+    if db is None:
+        return
+
+    collection_names = [name for name in db.list_collection_names() if name != 'data']
+
+    all_data = []
+    seen_queries = set()
+    for collection_name in collection_names:
+        collection = db[collection_name]
+        for item in collection.find({}):
+            if item['query'] not in seen_queries:
+                seen_queries.add(item['query'])
+                all_data.append(item)
+
+    db['data'].drop()
+
+    new_collection = db['data']
+    if all_data:
+        new_collection.insert_many(all_data)
+
+    print("Data merged and duplicates removed based on 'query'. New collection 'data' created.")
+    create_excel_file('data')
+
+
 def insert_vendor_data(collection, category, final_url, result, valid_links_by_category):
     print(f"Inserting data for link: {final_url}")
     category_label, score = classify_text(result['combined_text'], categories)

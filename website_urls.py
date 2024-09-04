@@ -1,4 +1,12 @@
-WEBSITE_URL = 'https://www.perfectcircle.co.uk/our-suppliers/p1'
+WEBSITE_URL = 'https://www.esources.co.uk/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://ciof.org.uk/guidance-and-resources/suppliers-directory' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.besa.org.uk/supplier/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.dpaonthenet.net/es.aspx?st=1&sf=' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.defenceonline.co.uk/supplier-directory/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://theiba.co.uk/supplier-list/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.public-sector.co.uk/findasupplier' #without outscraper both links and verification
+# WEBSITE_URL = 'https://uktin.net/navigate-uk-telecoms/supplier-directory/search?display_name=&display_name_1=All&field_region_target_id=All&field_services_target_id=All' #without outscraper both links and verification
+#Couldnt finish this fpr whatever reason is # WEBSITE_URL = 'https://www.perfectcircle.co.uk/our-suppliers/p1'
 #I got banned this one # WEBSITE_URL = "https://www.crowncommercial.gov.uk/suppliers" #without outscraper both links and verification
 # WEBSITE_URL = "https://uk.ezilon.com/" #without outscraper both links and verification
 # WEBSITE_URL = "https://samar.pro/blog/best-wholesale-distributors/" #without outscraper both links and verification

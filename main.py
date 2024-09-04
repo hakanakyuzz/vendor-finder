@@ -1,17 +1,19 @@
+from scrapers.esources_scraper import scrape_links
+from clients.beautifulsoap_client import scrape_vendor_data
 from db import connect_to_mongo
 from excel import create_excel_file
 from website_urls import WEBSITE_URL
 from verification import verify_emails
 from driver import setup_driver, close_driver
-from scrapers.perfectcircle_scraper import scrape_links
-from clients.beautifulsoap_client import scrape_vendor_data
 from utils import (
     get_final_url,
     get_base_url,
     get_base_collection_name,
     insert_vendor_data,
     get_priority_text,
-    get_combined_text
+    get_combined_text,
+    update_new_collection,
+    merge_collections
 )
 
 
@@ -95,6 +97,10 @@ def main():
     close_driver(driver)
 
     create_excel_file(collection_name)
+
+    update_new_collection(collection_name)
+
+    merge_collections()
 
 
 if __name__ == "__main__":
