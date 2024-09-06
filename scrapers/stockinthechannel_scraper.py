@@ -16,11 +16,10 @@ def scrape_links(driver, wait):
 
         for div_index in range(len(div_elements)):
             attempt = 0
-            while attempt < 3:  # Retry up to 3 times in case of stale element
+            while attempt < 3:
                 try:
                     print(f"Processing div element {div_index + 1}/{len(div_elements)} (Attempt {attempt + 1})...")
 
-                    # Re-locate div_elements to avoid stale element reference issues
                     div_elements = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'col-sm-4')))
                     div_element = div_elements[div_index]
 
@@ -45,9 +44,9 @@ def scrape_links(driver, wait):
                             print("Tooltip link not found on the new page.")
                         finally:
                             print(f"Returning to the main page: {page_url}")
-                            driver.get(page_url)  # Go back to the original page to continue scraping
+                            driver.get(page_url)
 
-                    break  # Exit the retry loop if successful
+                    break
 
                 except (StaleElementReferenceException, NoSuchElementException) as e:
                     print(f"Encountered {e.__class__.__name__} on attempt {attempt + 1}. Retrying...")

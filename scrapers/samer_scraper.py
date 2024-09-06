@@ -21,9 +21,8 @@ def scrape_links(driver, wait):
 
         print("Filtering `<p>` tags with no child elements...")
         for p_tag in p_tags:
-            # Check if the p tag has no children
             if not p_tag.find_elements(By.XPATH, './*'):
-                link_text = p_tag.text.strip()  # Extract the text and remove any surrounding whitespace
+                link_text = p_tag.text.strip()
                 if link_text:
                     extracted_links.append(link_text)
                     print(f"Extracted link text: {link_text}")

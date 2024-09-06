@@ -31,7 +31,6 @@ def scrape_links(driver, wait):
 
     scrape_a_tags()
 
-    # Step 3: Process `li` elements in `ul` with class `distributors-filter`
     try:
         print("Locating `ul` element with class 'distributors-filter'...")
         ul_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'distributors-filter')))
@@ -39,11 +38,10 @@ def scrape_links(driver, wait):
 
         for li_index in range(len(li_elements)):
             attempt = 0
-            while attempt < 3:  # Retry up to 3 times in case of stale element
+            while attempt < 3:
                 try:
                     print(f"Processing li element {li_index + 1}/{len(li_elements)} (Attempt {attempt + 1})...")
 
-                    # Re-locate the ul and li elements to avoid stale element reference issues
                     ul_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'distributors-filter')))
                     li_elements = ul_element.find_elements(By.TAG_NAME, 'li')
                     li_element = li_elements[li_index]
@@ -54,15 +52,10 @@ def scrape_links(driver, wait):
                     if href:
                         print(f"Navigating to the new page: {href}")
                         driver.get(href)
-
-                        # Scrape `a` tags on the new page
                         scrape_a_tags()
-
                         print(f"Returning to the main page: {page_url}")
-                        driver.get(page_url)  # Go back to the original page after each `li` is processed
-
-                    break  # Exit the retry loop if successful
-
+                        driver.get(page_url)
+                    break
                 except (StaleElementReferenceException, NoSuchElementException) as e:
                     print(f"Encountered {e.__class__.__name__} on attempt {attempt + 1}. Retrying...")
                     attempt += 1

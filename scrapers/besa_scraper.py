@@ -12,11 +12,10 @@ def scrape_links(driver, wait):
     final_links = []
 
     try:
-        # Scroll down to load more data until no more data is loaded
         last_height = driver.execute_script("return document.body.scrollHeight")
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)  # Wait for new data to load
+            time.sleep(2)
             new_height = driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
                 break

@@ -1,4 +1,9 @@
-WEBSITE_URL = 'https://www.esources.co.uk/wholesale-suppliers/31/' #without outscraper both links and verification
+WEBSITE_URL = '' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.ukhospitality.org.uk/supplier/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.slcc.co.uk/supplier-directory/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://supplier-directory.betterretailing.com/suppliers/' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.crowncommercial.gov.uk/agreements/RM6238:1/lot-suppliers' #without outscraper both links and verification
+# WEBSITE_URL = 'https://www.foodmanufacture.co.uk/Suppliers?page=A' #without outscraper both links and verification
 # WEBSITE_URL = 'https://ciof.org.uk/guidance-and-resources/suppliers-directory' #without outscraper both links and verification
 # WEBSITE_URL = 'https://www.besa.org.uk/supplier/' #without outscraper both links and verification
 # WEBSITE_URL = 'https://www.dpaonthenet.net/es.aspx?st=1&sf=' #without outscraper both links and verification

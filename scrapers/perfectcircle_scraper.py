@@ -25,29 +25,20 @@ def scrape_links(driver, wait):
                 next_buttons = driver.find_elements(By.CSS_SELECTOR, "a.next")
                 if next_buttons:
                     next_button = next_buttons[0]
-
-                    # Scroll to the 'Next' button to ensure it's in view
                     driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
 
-                    # Wait for the element to be clickable
                     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a.next")))
-
-                    # Click the 'Next' button with retry mechanism
-                    for _ in range(3):  # Try up to 3 times
+                    for _ in range(3):
                         try:
                             next_button.click()
                             break
                         except ElementClickInterceptedException:
-                            # Wait a short time before retrying
                             time.sleep(1)
-                            # Refresh the list of next buttons
                             next_buttons = driver.find_elements(By.CSS_SELECTOR, "a.next")
                             if next_buttons:
                                 next_button = next_buttons[0]
                             else:
                                 break
-
-                    # Wait until the new page loads
                     wait.until(EC.staleness_of(next_button))
                     print("Moved to the next page.")
                 else:

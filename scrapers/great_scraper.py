@@ -6,9 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 def scrape_links(driver, wait):
     print("Navigating to the website...")
     driver.get(WEBSITE_URL)
-
-    # links_by_category = {}
-    # links_by_category['category'] = []
     links_by_category = {'category': []}
 
     while True:

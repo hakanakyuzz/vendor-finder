@@ -11,12 +11,11 @@ def scrape_links(driver, wait):
     all_links = []
 
     try:
-        # Close the popup by clicking the button with id 'save_cookie_settings_button'
         try:
             print("Closing the popup...")
             close_popup_button = wait.until(EC.element_to_be_clickable((By.ID, 'save_cookie_settings_button')))
             close_popup_button.click()
-            time.sleep(2)  # Wait for the popup to close
+            time.sleep(2)
         except TimeoutException:
             print("Popup did not appear or was not closed in time.")
 
@@ -38,7 +37,7 @@ def scrape_links(driver, wait):
                 print("Handling pagination...")
                 next_button = wait.until(EC.element_to_be_clickable((By.ID, 'pagination_next')))
                 next_button.click()
-                time.sleep(2)  # Wait for the next page to load
+                time.sleep(2)
             except (TimeoutException, NoSuchElementException):
                 print("No more pages found or pagination failed.")
                 break

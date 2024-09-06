@@ -1,4 +1,4 @@
-from scrapers.esources_scraper import scrape_links
+from scrapers.ukhospitality_scraper import scrape_links
 from clients.beautifulsoap_client import scrape_vendor_data
 from db import connect_to_mongo
 from excel import create_excel_file

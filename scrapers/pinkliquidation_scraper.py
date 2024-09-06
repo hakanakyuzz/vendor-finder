@@ -10,10 +10,10 @@ def scrape_links(driver, wait):
     driver.get(page_url)
 
     extracted_links = []
-    popup_closed = False  # Flag to check if the popup has already been closed
+    popup_closed = False
 
     def close_popup_if_present():
-        nonlocal popup_closed  # Allow the function to modify the outer scope variable
+        nonlocal popup_closed
         if not popup_closed:
             try:
                 print("Checking for the presence of the ESC popup button...")
@@ -23,30 +23,29 @@ def scrape_links(driver, wait):
                 )
 
                 esc_button.click()
-                popup_closed = True  # Set the flag to True after closing the popup
+                popup_closed = True
                 print("Popup closed.")
             except TimeoutException:
                 print("ESC popup button not found or popup already closed.")
-                popup_closed = True  # Set the flag to True if popup is not found
+                popup_closed = True
 
     close_popup_if_present()
 
     load_more_clicks = 0
-    max_clicks = 862  # Set the number of times you want to click the "Load More" button
+    max_clicks = 862
 
     while load_more_clicks < max_clicks:
         try:
             print(f"Attempt {load_more_clicks + 1} to click the 'Load More' button...")
-            # Wait until the overlay disappears
             WebDriverWait(driver, 10).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'sp-backdrop-info')))
 
             button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'StylableButton2545352419__label')))
             driver.execute_script("arguments[0].scrollIntoView(true);", button)
             driver.execute_script("arguments[0].click();", button)
 
-            close_popup_if_present()  # This will now run only once because of the flag
+            close_popup_if_present()
 
-            load_more_clicks += 1  # Increment the counter after each successful click
+            load_more_clicks += 1
 
         except (TimeoutException, NoSuchElementException):
             print("Button no longer exists or could not be found.")

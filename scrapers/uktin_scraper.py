@@ -32,7 +32,7 @@ def scrape_links(driver, wait):
             print("Looking for the 'Next' button to go to the next page...")
             next_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'pager__item--next')))
             next_button.click()
-            wait.until(EC.staleness_of(h2_elements[0]))  # Wait until the page changes
+            wait.until(EC.staleness_of(h2_elements[0]))
         except (TimeoutException, NoSuchElementException):
             print("No 'Next' button found or no more pages, stopping pagination.")
             break

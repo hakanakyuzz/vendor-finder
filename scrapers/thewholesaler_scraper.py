@@ -33,7 +33,7 @@ def scrape_links(driver, wait):
         print(f"Found {len(all_vendor_links)} total links so far")
 
     vendor_links_by_category = {
-        'all_vendors': []  # Use a single key for all vendor links
+        'all_vendors': []
     }
 
     for link in all_vendor_links:

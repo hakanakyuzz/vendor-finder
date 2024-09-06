@@ -2,13 +2,12 @@ from website_urls import WEBSITE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import time
 
 def scrape_links(driver, wait):
     print("Navigating to the website...")
     driver.get(WEBSITE_URL)
 
-    print("Deleting all cookies...")
+    print("Deleting all cookies initially...")
     driver.delete_all_cookies()
 
     driver.refresh()
@@ -40,7 +39,11 @@ def scrape_links(driver, wait):
                 try:
                     print("Clicking the last 'a' tag to go to the next page...")
                     last_element.click()
-                    time.sleep(5)
+
+                    print("Deleting all cookies after clicking 'Next'...")
+                    driver.delete_all_cookies()
+
+                    driver.refresh()
                 except TimeoutException:
                     print("Timeout while trying to click the next page link.")
                     break
