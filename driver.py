@@ -17,11 +17,18 @@ def setup_driver():
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
     ]
     user_agent = random.choice(user_agents)
+
     options.add_argument(f'user-agent={user_agent}')
+    options.add_argument('--disable-http2')
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-software-rasterizer')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--no-sandbox')
 
     driver = webdriver.Chrome(service=service, options=options)
 
-    driver.set_page_load_timeout(40)
+    driver.set_page_load_timeout(30)
 
     wait = WebDriverWait(driver, 10)
 

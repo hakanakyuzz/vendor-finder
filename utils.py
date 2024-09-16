@@ -189,6 +189,7 @@ from db import connect_to_mongo
 from excel import create_excel_file
 
 
+
 def merge_collections():
     db = connect_to_mongo()
     if db is None:

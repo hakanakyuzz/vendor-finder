@@ -1,10 +1,11 @@
-from scrapers.ukhospitality_scraper import scrape_links
+from scrapers.iwfm_scraper import scrape_links
 from clients.beautifulsoap_client import scrape_vendor_data
 from db import connect_to_mongo
 from excel import create_excel_file
 from website_urls import WEBSITE_URL
 from verification import verify_emails
 from driver import setup_driver, close_driver
+from selenium.common.exceptions import TimeoutException
 from utils import (
     get_final_url,
     get_base_url,
@@ -51,6 +52,12 @@ def main():
                     print(f"Skipping duplicate base URL: {base_url}")
                     continue
                 processed_urls.add(base_url)
+
+                try:
+                    driver.get(final_url)
+                except TimeoutException:
+                    print(f"Timeout while loading {final_url}, skipping.")
+                    continue
 
                 # results = scrape_vendor_data(outscraper_client, base_url)
                 results = scrape_vendor_data(base_url)
