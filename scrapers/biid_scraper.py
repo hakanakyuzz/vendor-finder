@@ -11,15 +11,6 @@ def scrape_links(driver, wait):
     final_links = []
     footer_links = []
 
-    # while True:
-    #     try:
-    #         print("Clicking 'pager__item' to load more pages...")
-    #         pager_item = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'pager__item')))
-    #         pager_item.click()
-    #     except (NoSuchElementException, TimeoutException):
-    #         print("No more 'pager__item' elements to click, stopping pagination.")
-    #         break
-
     try:
         print("Collecting 'o-tile__footer' links...")
         footers = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'o-tile__footer')))
