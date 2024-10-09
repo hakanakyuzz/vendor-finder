@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from website_urls import WEBSITE_URL
 
+
 def scrape_links(driver, wait):
     print("Navigating to the website...")
     driver.get(WEBSITE_URL)
