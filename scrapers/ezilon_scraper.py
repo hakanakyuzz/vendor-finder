@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 
+
 def scrape_links(driver, wait):
     def explore_page(url, visited_links, extracted_links):
         try:
