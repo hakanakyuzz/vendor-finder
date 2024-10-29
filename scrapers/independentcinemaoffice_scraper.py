@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from website_urls import WEBSITE_URL
 
+
 def scrape_links(driver, wait):
     page_url = WEBSITE_URL
     print(f"Navigating to the website: {page_url}...")
